@@ -1634,7 +1634,7 @@ conn_timeout(Conn *c)
 
         timeout_ct++; /* stats */
         j->r.timeout_ct++;
-        bury_job(c->srv, j, 0); /* Bury it */
+        bury_job(c->srv, remove_this_reserved_job(c, j), 0); /* Bury it */
         connsched(c);
     }
 
