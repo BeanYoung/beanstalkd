@@ -1613,7 +1613,7 @@ dispatch_cmd(Conn *c)
 static void
 conn_timeout(Conn *c)
 {
-    int r, should_timeout = 0;
+    int should_timeout = 0;
     job j;
 
     /* Check if the client was trying to reserve a job. */
@@ -1634,8 +1634,7 @@ conn_timeout(Conn *c)
 
         timeout_ct++; /* stats */
         j->r.timeout_ct++;
-        r = enqueue_job(c->srv, remove_this_reserved_job(c, j), 0, 0);
-        if (r < 1) bury_job(c->srv, j, 0); /* out of memory, so bury it */
+        bury_job(c->srv, j, 0); /* Bury it */
         connsched(c);
     }
 
